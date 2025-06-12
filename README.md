@@ -1,11 +1,14 @@
-Welcome to this repository—a deep dive into the mathematical foundations of machine learning, reimagined and reimplemented from scratch.
+# 📐 A Mathematician’s/Engineers Take on Machine Learning
 
-This project aims to bridge the gap between abstract mathematical theory and practical machine learning. Here, you’ll find:
+Repository dedicated to exploring the mathematical foundations behind  machine learning algorithms. This project is designed  to understand not just how machine learning works, but *why* it works, by reconstructing key algorithms and libraries from the ground up.
 
-Core mathematical concepts (linear algebra, calculus, probability, optimization) built from first principles
+---
 
-Reimplementations of popular machine learning libraries and algorithms with detailed mathematical derivations
+## 🚀 What You’ll Find Here
 
-Step-by-step explorations of how modern ML tools work under the hood, including proofs, visualizations, and computational complexity discussions
+- **Mathematical Foundations**  
+  Linear algebra, calculus, probability, and optimization—implemented from first principles, with clear explanations and proofs.
 
-Advanced topics such as Bayesian inference, neural networks, and transformers, all explained and coded from the ground up
+- **Algorithm Reimplementations**  
+  Step-by-step recreations of popular machine learning algorithms and library functions, each accompanied by mathematical derivations and computational analyses.
+
