@@ -39,7 +39,7 @@ plt.show()
 
 
 laste = disease_df['TenYearCHD'].plot()
-plt.show(laste)
+#plt.show(laste)
 
 
 from sklearn.linear_model import LogisticRegression
