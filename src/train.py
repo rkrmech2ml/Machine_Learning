@@ -70,3 +70,59 @@ plt.ylabel("Loss")
 plt.title("Training Loss")
 plt.grid(True)
 plt.show()
+
+
+x_vals = np.linspace(0, 1, 100)
+t_vals = np.linspace(0, 1, 100)
+X, T = np.meshgrid(x_vals, t_vals)
+XT = np.hstack((X.flatten()[:, None], T.flatten()[:, None]))
+XT_tensor = tf.convert_to_tensor(XT, dtype=tf.float32)
+
+
+u_pred = model(XT_tensor)
+U = u_pred.numpy().reshape(100, 100)
+
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 6))
+plt.contourf(X, T, U, 100, cmap='inferno')
+plt.colorbar(label='u(x, t)')
+plt.xlabel('x')
+plt.ylabel('t')
+plt.title('Predicted solution u(x, t)')
+plt.show()
+
+
+u_exact = np.sin(np.pi * XT[:, 0]) * np.exp(-np.pi**2 * XT[:, 1])
+error = np.abs(u_pred - u_exact)
+
+
+U_pred = u_pred.numpy().reshape(100, 100)
+plt.figure(figsize=(6, 4))
+plt.contourf(X, T, U_pred, 100, cmap='inferno')
+plt.colorbar(label='Predicted u(x,t)')
+plt.title('PINN Prediction')
+plt.xlabel('x')
+plt.ylabel('t')
+plt.show()
+
+Error = error.reshape(100, 100)
+plt.figure(figsize=(6, 4))
+plt.contourf(X, T, Error, 100, cmap='viridis')
+plt.colorbar(label='|Error|')
+plt.title('Absolute Error: |u_PINN - u_exact|')
+plt.xlabel('x')
+plt.ylabel('t')
+plt.show()
+
+
+mid_idx = 50  # index for t ≈ 0.5
+plt.plot(x_vals, U_pred[mid_idx, :], label="PINN")
+plt.plot(x_vals, np.sin(np.pi * x_vals) * np.exp(-np.pi**2 * t_vals[mid_idx]), label="Exact", linestyle='dashed')
+plt.xlabel("x")
+plt.ylabel("u(x, t=0.5)")
+plt.legend()
+plt.title("Comparison at t = 0.5")
+plt.grid(True)
+plt.show()

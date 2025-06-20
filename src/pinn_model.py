@@ -16,17 +16,21 @@ class PINN(tf.keras.Model): #defining a new classs called PINN, it iherits from 
         return u
 
     def compute_pde_residual(self, inputs):
-        """Computes the residual of the 1D heat equation: u_t = u_xx"""
+        """Computes residual of the 1D heat equation: u_t = u_xx"""
+
         with tf.GradientTape(persistent=True) as tape1:
             tape1.watch(inputs)
             with tf.GradientTape() as tape2:
                 tape2.watch(inputs)
                 u = self.call(inputs)
             u_x_t = tape2.gradient(u, inputs)  # ∂u/∂x and ∂u/∂t
-        u_x = u_x_t[:, 0:1]
-        u_t = u_x_t[:, 1:2]
-        u_xx_t = tape1.gradient(u_x, inputs)
-        assert u_xx_t is not None, "Second derivative is None. Check the computation graph."
+            u_x = u_x_t[:, 0:1]
+            u_t = u_x_t[:, 1:2]
+        u_xx_t = tape1.gradient(u_x, inputs)   # ∂²u/∂x² and ∂²u/∂x∂t
         u_xx = u_xx_t[:, 0:1]
+
+        del tape1
+        del tape2
+
         residual = u_t - u_xx
         return residual
