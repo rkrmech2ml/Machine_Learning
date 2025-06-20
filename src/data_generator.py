@@ -2,6 +2,7 @@ import numpy as np
 
 def generate_collocation_points(n_points, x_range=(0, 1), t_range=(0, 1)):
     x = np.random.uniform(x_range[0], x_range[1], (n_points, 1))
+    #(n_points, 1)= creates array with n_points rows and 1 column
     t = np.random.uniform(t_range[0], t_range[1], (n_points, 1))
     return np.hstack((x, t))  # shape (n_points, 2)
 

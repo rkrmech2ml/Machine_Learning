@@ -20,6 +20,7 @@ u0_fn = lambda x: np.sin(np.pi * x)
 
 # ----- Generate training data -----
 X_colloc = tf.convert_to_tensor(generate_collocation_points(N_colloc), dtype=tf.float32)
+X_colloc_var = tf.Variable(X_colloc)
 X_bound = tf.convert_to_tensor(generate_boundary_points(N_bound), dtype=tf.float32)
 X_init_np, u_init_np = generate_initial_condition(N_init, u0_fn=u0_fn)
 X_init = tf.convert_to_tensor(X_init_np, dtype=tf.float32)
@@ -37,7 +38,7 @@ loss_history = []
 def train_step():
     with tf.GradientTape() as tape:
         # Physics loss
-        f = model.compute_pde_residual(X_colloc)
+        f = model.compute_pde_residual(X_colloc_var)
         loss_f = tf.reduce_mean(tf.square(f))
 
         # Boundary loss
