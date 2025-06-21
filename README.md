@@ -26,7 +26,7 @@ u(x, 0) = \sin(\pi x)
 
 ---
 
-## 📷 Example Visuals
+## 📷 Results
 
 ### 🔸 PINN Predicted Heatmap
 ![PINN Solution](results/predictedPINN.png)
