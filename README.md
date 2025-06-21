@@ -171,4 +171,4 @@ python src/fdm_solver.py
   4. Returns residual \( f = u_t - u_{xx} \)
 
 - **GradientTape in TensorFlow** records operations on tensors and applies the chain rule to compute gradients automatically.
-  - We use two tapes to compute first and second-order derivatives separately.
+- We use two tapes to compute first and second-order derivatives separately.
