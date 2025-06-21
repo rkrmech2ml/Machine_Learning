@@ -83,10 +83,12 @@ u_pred = model(XT_tensor)
 U = u_pred.numpy().reshape(100, 100)
 
 
-import matplotlib.pyplot as plt
+print("XT_tensor shape:", XT_tensor.shape)
+print("u_pred shape:", u_pred.shape)
+
 
 plt.figure(figsize=(8, 6))
-plt.contourf(X, T, U, 100, cmap='inferno')
+plt.contourf(X, T, U, 100, cmap='coolwarm')
 plt.colorbar(label='u(x, t)')
 plt.xlabel('x')
 plt.ylabel('t')
@@ -94,22 +96,44 @@ plt.title('Predicted solution u(x, t)')
 plt.show()
 
 
-u_exact = np.sin(np.pi * XT[:, 0]) * np.exp(-np.pi**2 * XT[:, 1])
-error = np.abs(u_pred - u_exact)
+u_pred_np = u_pred.numpy().flatten()           # shape (10000,)
+u_exact = np.sin(np.pi * XT[:, 0]) * np.exp(-np.pi**2 * XT[:, 1])  # already shape (10000,)
+error = np.abs(u_pred_np - u_exact) 
 
 
-U_pred = u_pred.numpy().reshape(100, 100)
-plt.figure(figsize=(6, 4))
-plt.contourf(X, T, U_pred, 100, cmap='inferno')
-plt.colorbar(label='Predicted u(x,t)')
-plt.title('PINN Prediction')
+
+# Compute the initial condition on the same grid
+U0 = np.sin(np.pi * X)  # X has shape (100, 100)
+
+plt.figure(figsize=(8, 6))
+print("X shape:", X.shape)
+print("T shape:", T.shape)
+plt.contourf(X, T, U0, 100, cmap='coolwarm')
+plt.colorbar(label='u(x, t=0)')
+plt.xlabel('x')
+plt.ylabel('t')
+plt.title('Initial Condition: $u(x, 0) = \sin(\pi x)$')
+plt.show()
+
+
+
+plt.figure(figsize=(8, 6))
+U_exact = u_exact.reshape(100, 100)
+print("X shape:", X.shape)
+print("T shape:", T.shape)
+print("U_exact shape:", U_exact.shape)
+plt.contourf(X, T, U_exact, 100,cmap='coolwarm')
+plt.colorbar(label='Exact u(x,t)')
+plt.title('Exact Solution $u(x, t)$')
 plt.xlabel('x')
 plt.ylabel('t')
 plt.show()
 
+
+
 Error = error.reshape(100, 100)
 plt.figure(figsize=(6, 4))
-plt.contourf(X, T, Error, 100, cmap='viridis')
+plt.contourf(X, T, Error, 100, cmap='coolwarm')
 plt.colorbar(label='|Error|')
 plt.title('Absolute Error: |u_PINN - u_exact|')
 plt.xlabel('x')
@@ -118,7 +142,7 @@ plt.show()
 
 
 mid_idx = 50  # index for t ≈ 0.5
-plt.plot(x_vals, U_pred[mid_idx, :], label="PINN")
+plt.plot(x_vals, U[mid_idx, :], label="PINN")
 plt.plot(x_vals, np.sin(np.pi * x_vals) * np.exp(-np.pi**2 * t_vals[mid_idx]), label="Exact", linestyle='dashed')
 plt.xlabel("x")
 plt.ylabel("u(x, t=0.5)")
