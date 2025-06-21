@@ -1,4 +1,4 @@
-# 🔥 Physics-Informed Neural Network vs Finite Difference Method — 1D Heat Equation
+# 🔥 Physics-Informed Neural Network  — 1D Heat Equation
 
 This project solves the 1D heat equation using two approaches:
 1. **Physics-Informed Neural Networks (PINNs)** — a neural network that embeds the physics of the PDE into its training.
